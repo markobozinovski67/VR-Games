@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,94 +9,86 @@
 <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
 <style>
-    body {
-        margin: 0;
-        overflow: hidden;
-        font-family: Arial, sans-serif;
-    }
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
 
-    #info {
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 10;
-
-        padding: 14px 25px;
-        border-radius: 12px;
-
-        background: rgba(0,0,0,0.75);
-        color: white;
-
-        text-align: center;
-        font-size: 17px;
-
-        pointer-events: none;
-    }
+#message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,.8);
+    color: white;
+    padding: 14px 25px;
+    border-radius: 12px;
+    z-index: 20;
+    text-align: center;
+    font-size: 18px;
+    pointer-events: none;
+}
 </style>
 </head>
 
 <body>
 
-<div id="info">
-    Find the hidden number...
+<div id="message">
+    Find the hidden code...
 </div>
 
-
 <a-scene
-    background="color: #65778a"
-    renderer="colorManagement: true; physicallyCorrectLights: true"
-    vr-mode-ui="enabled: true">
+    background="color:#718296"
+    renderer="colorManagement:true; physicallyCorrectLights:true"
+    vr-mode-ui="enabled:true">
 
-<!-- ====================================================== -->
-<!-- LIGHTING -->
-<!-- ====================================================== -->
+<!-- =====================================================
+     LIGHTING
+===================================================== -->
+
+<a-entity light="type:ambient; intensity:0.7"></a-entity>
 
 <a-entity
-    light="type: ambient; intensity: 0.65"
-    position="0 5 0">
+    light="type:directional; intensity:1.5"
+    position="0 8 2">
 </a-entity>
 
 <a-entity
-    light="type: directional; intensity: 1.4"
-    position="0 8 4">
-</a-entity>
-
-<a-entity
-    light="type: point; intensity: 1.5; distance: 20"
+    light="type:point; intensity:1.5; distance:25"
     position="0 6 0">
 </a-entity>
 
 
-<!-- ====================================================== -->
-<!-- PLAYER -->
-<!-- ====================================================== -->
+<!-- =====================================================
+     PLAYER
+===================================================== -->
 
 <a-entity id="player" position="0 1.6 3">
 
     <a-camera
-        look-controls="pointerLockEnabled: true"
-        wasd-controls="enabled: true">
+        look-controls
+        wasd-controls="acceleration:15">
     </a-camera>
 
-    <!-- LEFT VR CONTROLLER -->
     <a-entity
-        laser-controls="hand: left"
-        raycaster="objects: .clickable; far: 20">
+        laser-controls="hand:left"
+        raycaster="objects:.clickable; far:20">
     </a-entity>
 
-    <!-- RIGHT VR CONTROLLER -->
     <a-entity
-        laser-controls="hand: right"
-        raycaster="objects: .clickable; far: 20">
+        laser-controls="hand:right"
+        raycaster="objects:.clickable; far:20">
     </a-entity>
 
 </a-entity>
 
 
-<!-- ====================================================== -->
-<!-- ROOM -->
-<!-- ====================================================== -->
+<!-- =====================================================
+     ROOM
+===================================================== -->
 
 <!-- FLOOR -->
 
@@ -104,18 +96,18 @@
     rotation="-90 0 0"
     width="20"
     height="20"
-    color="#d5d7da">
+    color="#d9dadd">
 </a-plane>
 
 
 <!-- BACK WALL -->
 
 <a-box
-    position="0 4 -6"
+    position="0 4 -7"
     width="20"
     height="8"
-    depth="0.3"
-    color="#687a8d">
+    depth=".3"
+    color="#718296">
 </a-box>
 
 
@@ -123,10 +115,10 @@
 
 <a-box
     position="-10 4 0"
-    width="0.3"
+    width=".3"
     height="8"
     depth="20"
-    color="#687a8d">
+    color="#718296">
 </a-box>
 
 
@@ -134,10 +126,10 @@
 
 <a-box
     position="10 4 0"
-    width="0.3"
+    width=".3"
     height="8"
     depth="20"
-    color="#687a8d">
+    color="#718296">
 </a-box>
 
 
@@ -146,155 +138,225 @@
 <a-box
     position="0 8 0"
     width="20"
-    height="0.3"
+    height=".3"
     depth="20"
-    color="#5e7082">
+    color="#657589">
 </a-box>
 
 
-<!-- ====================================================== -->
-<!-- FLOOR TEXT -->
-<!-- ====================================================== -->
+<!-- =====================================================
+     FLOOR DESIGN
+===================================================== -->
+
+<a-ring
+    position="0 .02 1"
+    rotation="-90 0 0"
+    radius-inner="3"
+    radius-outer="3.1"
+    color="#68717b">
+</a-ring>
+
+<a-ring
+    position="0 .025 1"
+    rotation="-90 0 0"
+    radius-inner="1.8"
+    radius-outer="1.9"
+    color="#68717b">
+</a-ring>
+
+
+<!-- EST 1849 -->
 
 <a-text
     value="EST. 1849"
-    position="0 0.02 1.5"
+    position="0 .04 1.8"
     rotation="-90 0 0"
     align="center"
     width="5"
-    color="#404952">
+    color="#414951">
 </a-text>
 
 
-<!-- ====================================================== -->
-<!-- GOLD CODE WALL -->
-<!-- ====================================================== -->
+<!-- =====================================================
+     MONEY / GOLD SHELVES
+===================================================== -->
 
-<!-- This is the clue wall. -->
+<a-entity id="leftShelves"></a-entity>
+<a-entity id="rightShelves"></a-entity>
+
+
+<!-- =====================================================
+     SECRET GOLD CODE WALL
+===================================================== -->
+
+<a-text
+    value="THE GOLD HIDES THE CODE"
+    position="0 6.8 -6.82"
+    align="center"
+    width="6"
+    color="#dfe4e8">
+</a-text>
+
+
+<!-- dark backing -->
 
 <a-box
-    position="0 3 -5.75"
-    width="8"
-    height="5"
-    depth="0.15"
-    color="#4e5d6c">
+    position="0 3.7 -6.85"
+    width="7"
+    height="5.5"
+    depth=".15"
+    color="#566474">
 </a-box>
 
 
+<!-- =====================================================
+     GOLD 743
+     The bars are deliberately raised and angled.
+     They form 743 when viewed from the clue position.
+===================================================== -->
+
+<a-entity id="goldCode">
+
+    <!-- 7 -->
+
+    <a-box
+        position="-2.35 5.2 -6.98"
+        width="1.25"
+        height=".20"
+        depth=".30"
+        rotation="0 15 0"
+        color="#d9a514">
+    </a-box>
+
+    <a-box
+        position="-1.85 4.35 -6.98"
+        width=".20"
+        height="1.55"
+        depth=".30"
+        rotation="0 -5 0"
+        color="#d9a514">
+    </a-box>
+
+    <a-box
+        position="-2.35 3.5 -6.98"
+        width="1.25"
+        height=".20"
+        depth=".30"
+        rotation="0 -15 0"
+        color="#d9a514">
+    </a-box>
+
+
+    <!-- 4 -->
+
+    <a-box
+        position="-0.65 4.25 -7"
+        width=".20"
+        height="1.8"
+        depth=".30"
+        rotation="0 8 0"
+        color="#d9a514">
+    </a-box>
+
+    <a-box
+        position="-0.15 3.85 -7"
+        width="1.1"
+        height=".20"
+        depth=".30"
+        color="#d9a514">
+    </a-box>
+
+    <a-box
+        position=".35 4.45 -7"
+        width=".20"
+        height="1.2"
+        depth=".30"
+        rotation="0 -8 0"
+        color="#d9a514">
+    </a-box>
+
+
+    <!-- 3 -->
+
+    <a-box
+        position="1.35 5.2 -6.98"
+        width="1.25"
+        height=".20"
+        depth=".30"
+        color="#d9a514">
+    </a-box>
+
+    <a-box
+        position="1.85 4.35 -6.98"
+        width=".20"
+        height="1.55"
+        depth=".30"
+        rotation="0 8 0"
+        color="#d9a514">
+    </a-box>
+
+    <a-box
+        position="1.35 3.5 -6.98"
+        width="1.25"
+        height=".20"
+        depth=".30"
+        color="#d9a514">
+    </a-box>
+
+</a-entity>
+
+
+<!-- =====================================================
+     CLUE POSITION
+===================================================== -->
+
+<a-cylinder
+    id="clueSpot"
+    position="-4.2 .04 -1.2"
+    radius=".35"
+    height=".03"
+    color="#d5a91c"
+    opacity=".25">
+</a-cylinder>
+
 <a-text
-    value="LOOK FROM THE CORNER"
-    position="0 6 -5.88"
+    value="STAND HERE"
+    position="-4.2 .08 -1.2"
+    rotation="-90 0 0"
     align="center"
-    width="6"
-    color="#d6d9dd">
+    width="1.4"
+    color="#8b721d">
 </a-text>
 
 
-<!-- ====================================================== -->
-<!-- GOLD 743 -->
-<!-- ====================================================== -->
-
-<!--
-    The gold blocks form 743.
-
-    The player needs to stand approximately at
-    x = 0, y = 1.6, z = 2
-
-    and look toward the wall.
--->
-
-<!-- 7 -->
-
-<a-box position="-2.5 4.4 -5.9"
-    width="1.4"
-    height="0.25"
-    depth="0.15"
-    color="#e0ad16"></a-box>
-
-<a-box position="-1.9 3.7 -5.9"
-    width="0.25"
-    height="1.5"
-    depth="0.15"
-    color="#e0ad16"></a-box>
-
-<a-box position="-2.5 3.0 -5.9"
-    width="1.4"
-    height="0.25"
-    depth="0.15"
-    color="#e0ad16"></a-box>
-
-
-<!-- 4 -->
-
-<a-box position="-0.6 4.0 -5.9"
-    width="0.25"
-    height="2"
-    depth="0.15"
-    color="#e0ad16"></a-box>
-
-<a-box position="-0.6 3.2 -5.9"
-    width="1.2"
-    height="0.25"
-    depth="0.15"
-    color="#e0ad16"></a-box>
-
-<a-box position="0.0 3.7 -5.9"
-    width="0.25"
-    height="1.2"
-    depth="0.15"
-    color="#e0ad16"></a-box>
-
-
-<!-- 3 -->
-
-<a-box position="1.1 4.4 -5.9"
-    width="1.2"
-    height="0.25"
-    depth="0.15"
-    color="#e0ad16"></a-box>
-
-<a-box position="1.65 3.7 -5.9"
-    width="0.25"
-    height="1.4"
-    depth="0.15"
-    color="#e0ad16"></a-box>
-
-<a-box position="1.1 3.0 -5.9"
-    width="1.2"
-    height="0.25"
-    depth="0.15"
-    color="#e0ad16"></a-box>
-
-
-<!-- ====================================================== -->
-<!-- LOCKER WALL -->
-<!-- ====================================================== -->
+<!-- =====================================================
+     LOCKER WALL
+===================================================== -->
 
 <a-text
-    value="ARCHIVE LOCKERS"
-    position="0 7.1 -5.65"
+    value="SECURE ARCHIVES"
+    position="0 7.25 -6.65"
     align="center"
     width="7"
-    color="#dfe5ea">
+    color="#e2e5e8">
 </a-text>
 
+<a-entity id="lockerWall"></a-entity>
 
-<a-entity id="lockers"></a-entity>
 
-
-<!-- ====================================================== -->
-<!-- KEYPAD -->
-<!-- ====================================================== -->
+<!-- =====================================================
+     KEYPAD
+===================================================== -->
 
 <a-entity id="keypad" visible="false">
 
     <!-- keypad body -->
 
     <a-box
-        position="0 2.3 -4.9"
-        width="2.4"
-        height="2.9"
-        depth="0.2"
+        position="0 2.7 -6.45"
+        width="2.7"
+        height="3.3"
+        depth=".25"
         color="#20262d">
     </a-box>
 
@@ -302,234 +364,216 @@
     <!-- screen -->
 
     <a-plane
-        position="0 3.35 -5.02"
-        width="1.7"
-        height="0.45"
-        color="#10151a">
+        position="0 3.85 -6.59"
+        width="2"
+        height=".5"
+        color="#101418">
     </a-plane>
 
     <a-text
         id="screen"
         value="ENTER CODE"
-        position="0 3.35 -5.08"
+        position="0 3.85 -6.67"
         align="center"
-        width="3"
-        color="#00ff80">
+        width="3.5"
+        color="#00ff85">
     </a-text>
 
 
-    <!-- BUTTON 7 -->
+    <!-- 7 -->
 
     <a-box
-        class="clickable keypadButton"
+        class="clickable keypad"
         data-number="7"
-        position="-0.65 2.85 -5.08"
-        width="0.45"
-        height="0.45"
-        depth="0.12"
-        color="#59636e">
+        position="-.7 3.2 -6.62"
+        width=".5"
+        height=".5"
+        depth=".12"
+        color="#59636d">
 
-        <a-text
-            value="7"
-            position="0 0 -0.08"
+        <a-text value="7"
+            position="0 0 -.08"
             align="center"
             width="2"
             color="white">
         </a-text>
-
     </a-box>
 
 
-    <!-- BUTTON 8 -->
+    <!-- 8 -->
 
     <a-box
-        class="clickable keypadButton"
+        class="clickable keypad"
         data-number="8"
-        position="0 2.85 -5.08"
-        width="0.45"
-        height="0.45"
-        depth="0.12"
-        color="#59636e">
+        position="0 3.2 -6.62"
+        width=".5"
+        height=".5"
+        depth=".12"
+        color="#59636d">
 
-        <a-text
-            value="8"
-            position="0 0 -0.08"
+        <a-text value="8"
+            position="0 0 -.08"
             align="center"
             width="2"
             color="white">
         </a-text>
-
     </a-box>
 
 
-    <!-- BUTTON 9 -->
+    <!-- 9 -->
 
     <a-box
-        class="clickable keypadButton"
+        class="clickable keypad"
         data-number="9"
-        position="0.65 2.85 -5.08"
-        width="0.45"
-        height="0.45"
-        depth="0.12"
-        color="#59636e">
+        position=".7 3.2 -6.62"
+        width=".5"
+        height=".5"
+        depth=".12"
+        color="#59636d">
 
-        <a-text
-            value="9"
-            position="0 0 -0.08"
+        <a-text value="9"
+            position="0 0 -.08"
             align="center"
             width="2"
             color="white">
         </a-text>
-
     </a-box>
 
 
-    <!-- BUTTON 4 -->
+    <!-- 4 -->
 
     <a-box
-        class="clickable keypadButton"
+        class="clickable keypad"
         data-number="4"
-        position="-0.65 2.25 -5.08"
-        width="0.45"
-        height="0.45"
-        depth="0.12"
-        color="#59636e">
+        position="-.7 2.55 -6.62"
+        width=".5"
+        height=".5"
+        depth=".12"
+        color="#59636d">
 
-        <a-text
-            value="4"
-            position="0 0 -0.08"
+        <a-text value="4"
+            position="0 0 -.08"
             align="center"
             width="2"
             color="white">
         </a-text>
-
     </a-box>
 
 
-    <!-- BUTTON 5 -->
+    <!-- 5 -->
 
     <a-box
-        class="clickable keypadButton"
+        class="clickable keypad"
         data-number="5"
-        position="0 2.25 -5.08"
-        width="0.45"
-        height="0.45"
-        depth="0.12"
-        color="#59636e">
+        position="0 2.55 -6.62"
+        width=".5"
+        height=".5"
+        depth=".12"
+        color="#59636d">
 
-        <a-text
-            value="5"
-            position="0 0 -0.08"
+        <a-text value="5"
+            position="0 0 -.08"
             align="center"
             width="2"
             color="white">
         </a-text>
-
     </a-box>
 
 
-    <!-- BUTTON 6 -->
+    <!-- 6 -->
 
     <a-box
-        class="clickable keypadButton"
+        class="clickable keypad"
         data-number="6"
-        position="0.65 2.25 -5.08"
-        width="0.45"
-        height="0.45"
-        depth="0.12"
-        color="#59636e">
+        position=".7 2.55 -6.62"
+        width=".5"
+        height=".5"
+        depth=".12"
+        color="#59636d">
 
-        <a-text
-            value="6"
-            position="0 0 -0.08"
+        <a-text value="6"
+            position="0 0 -.08"
             align="center"
             width="2"
             color="white">
         </a-text>
-
     </a-box>
 
 
-    <!-- BUTTON 1 -->
+    <!-- 1 -->
 
     <a-box
-        class="clickable keypadButton"
+        class="clickable keypad"
         data-number="1"
-        position="-0.65 1.65 -5.08"
-        width="0.45"
-        height="0.45"
-        depth="0.12"
-        color="#59636e">
+        position="-.7 1.9 -6.62"
+        width=".5"
+        height=".5"
+        depth=".12"
+        color="#59636d">
 
-        <a-text
-            value="1"
-            position="0 0 -0.08"
+        <a-text value="1"
+            position="0 0 -.08"
             align="center"
             width="2"
             color="white">
         </a-text>
-
     </a-box>
 
 
-    <!-- BUTTON 2 -->
+    <!-- 2 -->
 
     <a-box
-        class="clickable keypadButton"
+        class="clickable keypad"
         data-number="2"
-        position="0 1.65 -5.08"
-        width="0.45"
-        height="0.45"
-        depth="0.12"
-        color="#59636e">
+        position="0 1.9 -6.62"
+        width=".5"
+        height=".5"
+        depth=".12"
+        color="#59636d">
 
-        <a-text
-            value="2"
-            position="0 0 -0.08"
+        <a-text value="2"
+            position="0 0 -.08"
             align="center"
             width="2"
             color="white">
         </a-text>
-
     </a-box>
 
 
-    <!-- BUTTON 3 -->
+    <!-- 3 -->
 
     <a-box
-        class="clickable keypadButton"
+        class="clickable keypad"
         data-number="3"
-        position="0.65 1.65 -5.08"
-        width="0.45"
-        height="0.45"
-        depth="0.12"
-        color="#59636e">
+        position=".7 1.9 -6.62"
+        width=".5"
+        height=".5"
+        depth=".12"
+        color="#59636d">
 
-        <a-text
-            value="3"
-            position="0 0 -0.08"
+        <a-text value="3"
+            position="0 0 -.08"
             align="center"
             width="2"
             color="white">
         </a-text>
-
     </a-box>
 
 
     <!-- ENTER -->
 
     <a-box
+        id="enterButton"
         class="clickable"
-        id="enter"
-        position="0 1.05 -5.08"
-        width="1.4"
-        height="0.45"
-        depth="0.12"
-        color="#2d8a54">
+        position="0 1.25 -6.62"
+        width="1.6"
+        height=".5"
+        depth=".12"
+        color="#277b4d">
 
         <a-text
             value="ENTER"
-            position="0 0 -0.08"
+            position="0 0 -.08"
             align="center"
             width="2"
             color="white">
@@ -540,167 +584,242 @@
 </a-entity>
 
 
-<!-- ====================================================== -->
-<!-- KEY -->
-<!-- ====================================================== -->
+<!-- =====================================================
+     KEY
+===================================================== -->
 
 <a-entity
     id="key"
     visible="false"
     class="clickable"
-    position="0 2 -4.5">
+    position="0 2.4 -5.9">
+
+    <a-cylinder
+        radius=".13"
+        height=".65"
+        rotation="0 0 90"
+        color="#e4bd37">
+    </a-cylinder>
+
+    <a-torus
+        position="-.35 0 0"
+        rotation="90 0 0"
+        radius=".22"
+        radius-tubular=".07"
+        color="#e4bd37">
+    </a-torus>
 
     <a-box
-        width="0.18"
-        height="0.18"
-        depth="1.1"
-        color="#e6bd3b">
+        position=".35 0 0"
+        width=".18"
+        height=".3"
+        depth=".12"
+        color="#e4bd37">
     </a-box>
-
-    <a-box
-        position="0 0 0.55"
-        width="0.18"
-        height="0.45"
-        depth="0.18"
-        color="#e6bd3b">
-    </a-box>
-
-    <a-text
-        value="KEY"
-        position="0 0.4 0"
-        align="center"
-        width="1.5"
-        color="#ffe789">
-    </a-text>
 
 </a-entity>
 
 
-<!-- ====================================================== -->
-<!-- EXIT DOOR -->
-<!-- ====================================================== -->
+<!-- =====================================================
+     EXIT DOOR
+===================================================== -->
 
 <a-box
-    id="exitFrame"
-    position="0 3 -9.7"
-    width="4"
-    height="6"
-    depth="0.4"
-    color="#3f4b58">
+    position="0 3 -9.6"
+    width="4.5"
+    height="6.2"
+    depth=".5"
+    color="#3d4854">
 </a-box>
-
 
 <a-box
     id="exitDoor"
-    position="0 3 -9.5"
-    width="3.3"
-    height="5.4"
-    depth="0.35"
-    color="#29333d">
+    class="clickable"
+    position="0 3 -9.3"
+    width="3.5"
+    height="5.5"
+    depth=".35"
+    color="#27313a">
 </a-box>
-
 
 <a-text
     value="EXIT"
-    position="0 4.5 -9.75"
+    position="0 4.6 -9.55"
     align="center"
     width="3"
     color="#ff5555">
 </a-text>
 
-
-<!-- Exit keyhole -->
-
-<a-box
-    id="keyhole"
-    position="0 2.8 -9.75"
-    width="0.25"
-    height="0.4"
-    depth="0.05"
-    color="#111">
-</a-box>
-
-
-<!-- ====================================================== -->
-<!-- WIN MESSAGE -->
-<!-- ====================================================== -->
-
 <a-text
-    id="win"
+    id="escapeText"
     value="ESCAPE COMPLETE!"
-    position="0 6.5 -5"
+    position="0 6.7 -8"
     align="center"
     width="8"
-    color="#00ff88"
+    color="#00ff80"
     visible="false">
 </a-text>
 
 
-<!-- ====================================================== -->
-<!-- JAVASCRIPT -->
-<!-- ====================================================== -->
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
 <script>
 
+const message = document.getElementById("message");
+const lockerWall = document.getElementById("lockerWall");
+const keypad = document.getElementById("keypad");
+const screen = document.getElementById("screen");
+const key = document.getElementById("key");
+const exitDoor = document.getElementById("exitDoor");
+const escapeText = document.getElementById("escapeText");
+
 let selectedLocker = null;
-
 let enteredCode = "";
-
 let hasKey = false;
-
-let escaped = false;
-
-
-const info =
-    document.querySelector("#info");
-
-const lockers =
-    document.querySelector("#lockers");
-
-const keypad =
-    document.querySelector("#keypad");
-
-const screen =
-    document.querySelector("#screen");
-
-const key =
-    document.querySelector("#key");
-
-const exitDoor =
-    document.querySelector("#exitDoor");
-
-const win =
-    document.querySelector("#win");
+let clueFound = false;
 
 
-/* ======================================================
+/* =====================================================
+   CREATE SHELVES
+===================================================== */
+
+function createShelf(side) {
+
+    const entity =
+        document.getElementById(
+            side === -1
+            ? "leftShelves"
+            : "rightShelves"
+        );
+
+    const x = side * 5.5;
+
+    /* vertical supports */
+
+    for (let i = 0; i < 4; i++) {
+
+        const support =
+            document.createElement("a-box");
+
+        support.setAttribute(
+            "position",
+            `${x + side * (i * 1.45 - 2.1)} 3 -1.8`
+        );
+
+        support.setAttribute(
+            "width",".18"
+        );
+
+        support.setAttribute(
+            "height","6"
+        );
+
+        support.setAttribute(
+            "depth","4.5"
+        );
+
+        support.setAttribute(
+            "color","#566474"
+        );
+
+        entity.appendChild(support);
+    }
+
+
+    /* shelf levels */
+
+    for (let row = 0; row < 4; row++) {
+
+        const shelf =
+            document.createElement("a-box");
+
+        shelf.setAttribute(
+            "position",
+            `${x} ${1.2 + row * 1.55} -1.8`
+        );
+
+        shelf.setAttribute(
+            "width","3.8"
+        );
+
+        shelf.setAttribute(
+            "height",".15"
+        );
+
+        shelf.setAttribute(
+            "depth","4.5"
+        );
+
+        shelf.setAttribute(
+            "color","#596776"
+        );
+
+        entity.appendChild(shelf);
+
+
+        /* money and gold */
+
+        for (let i = 0; i < 13; i++) {
+
+            const item =
+                document.createElement("a-box");
+
+            const isGold =
+                i % 3 !== 0;
+
+            item.setAttribute(
+                "position",
+                `${x + side * (Math.random()*1.4-0.7)}
+                 ${1.45 + row*1.55 + Math.random()*.3}
+                 ${-3.5 + Math.random()*3.3}`
+            );
+
+            item.setAttribute(
+                "width",
+                isGold ? ".45" : ".7"
+            );
+
+            item.setAttribute(
+                "height",
+                isGold ? ".22" : ".16"
+            );
+
+            item.setAttribute(
+                "depth",
+                isGold ? ".65" : ".5"
+            );
+
+            item.setAttribute(
+                "color",
+                isGold ? "#d7a814" : "#087b3b"
+            );
+
+            entity.appendChild(item);
+        }
+    }
+}
+
+createShelf(-1);
+createShelf(1);
+
+
+/* =====================================================
    CREATE LOCKERS
-====================================================== */
+===================================================== */
 
 const years = [
-
-1814,1815,1816,1817,1818,1819,1820,1821,
-1829,1830,1831,1832,1833,1834,1835,1836,
-1844,1845,1846,1847,1848,1849,1850,1851,
-1859,1860,1861,1862,1863,1864,1865,1866,
-1874,1875,1876,1877,1878,1879,1880,1881,
-1889,1890,1891,1892,1893,1894,1895,1896
-
+    1814,1815,1816,1817,1818,1819,1820,1821,
+    1829,1830,1831,1832,1833,1834,1835,1836,
+    1844,1845,1846,1847,1848,1849,1850,1851,
+    1859,1860,1861,1862,1863,1864,1865,1866,
+    1874,1875,1876,1877,1878,1879,1880,1881
 ];
-
 
 const columns = 8;
 
-const lockerWidth = 2.15;
-
-const lockerHeight = 1.35;
-
-
-/*
-Create the lockers on the back wall.
-*/
-
-years.forEach((year, index) => {
+years.forEach((year,index) => {
 
     const row =
         Math.floor(index / columns);
@@ -708,52 +827,43 @@ years.forEach((year, index) => {
     const column =
         index % columns;
 
-
     const x =
-        (column - 3.5) * lockerWidth;
+        (column - 3.5) * 2.2;
 
     const y =
-        6.1 - row * 1.55;
+        6.5 - row * 1.35;
 
 
-    /*
-    Locker body
-    */
+    /* locker */
 
     const locker =
         document.createElement("a-box");
 
+    locker.classList.add("clickable");
+
     locker.setAttribute(
         "position",
-        `${x} ${y} -5.55`
+        `${x} ${y} -6.45`
     );
 
     locker.setAttribute(
-        "width",
-        "2"
+        "width","2.02"
     );
 
     locker.setAttribute(
-        "height",
-        lockerHeight
+        "height","1.15"
     );
 
     locker.setAttribute(
-        "depth",
-        "0.35"
+        "depth",".35"
     );
 
     locker.setAttribute(
         "color",
-        "#647280"
+        year === 1849
+        ? "#707e8b"
+        : "#647280"
     );
-
-
-    /*
-    Make every locker clickable.
-    */
-
-    locker.classList.add("clickable");
 
     locker.setAttribute(
         "data-year",
@@ -761,9 +871,7 @@ years.forEach((year, index) => {
     );
 
 
-    /*
-    Year label
-    */
+    /* year */
 
     const label =
         document.createElement("a-text");
@@ -771,80 +879,68 @@ years.forEach((year, index) => {
     label.setAttribute(
         "value",
         year === 1849
-            ? "EST. 1849"
-            : String(year)
+        ? "EST. 1849"
+        : String(year)
     );
 
     label.setAttribute(
         "position",
-        "0 0.25 -0.2"
+        "0 .22 -.21"
     );
 
     label.setAttribute(
-        "align",
-        "center"
+        "align","center"
     );
 
     label.setAttribute(
-        "width",
-        "2"
+        "width","2"
     );
 
     label.setAttribute(
         "color",
         year === 1849
-            ? "#ffe27a"
-            : "#e1e6eb"
+        ? "#ffe078"
+        : "#e7eaed"
     );
-
 
     locker.appendChild(label);
 
 
-    /*
-    Locker handle
-    */
+    /* handle */
 
     const handle =
         document.createElement("a-box");
 
     handle.setAttribute(
         "position",
-        "0 -0.25 -0.23"
+        "0 -.25 -.23"
     );
 
     handle.setAttribute(
-        "width",
-        "0.35"
+        "width",".32"
     );
 
     handle.setAttribute(
-        "height",
-        "0.08"
+        "height",".08"
     );
 
     handle.setAttribute(
-        "depth",
-        "0.08"
+        "depth",".08"
     );
 
     handle.setAttribute(
-        "color",
-        "#252d35"
+        "color","#252c33"
     );
-
 
     locker.appendChild(handle);
 
-
-    lockers.appendChild(locker);
-
+    lockerWall.appendChild(locker);
 });
 
 
-/* ======================================================
-   LOCKER INTERACTION
-====================================================== */
+/* =====================================================
+   LOCKER CLICK
+===================================================== */
 
 setTimeout(() => {
 
@@ -852,284 +948,60 @@ setTimeout(() => {
         .querySelectorAll("[data-year]")
         .forEach(locker => {
 
-            locker.addEventListener(
-                "click",
-                () => {
+            locker.addEventListener("click", () => {
 
-                    const year =
-                        locker.getAttribute(
-                            "data-year"
-                        );
+                const year =
+                    locker.getAttribute("data-year");
 
 
-                    /*
-                    Only 1849 activates keypad.
-                    */
+                if (year === "1849") {
 
-                    if (year === "1849") {
+                    selectedLocker = locker;
 
-                        selectedLocker =
-                            locker;
-
-                        keypad.setAttribute(
-                            "visible",
-                            "true"
-                        );
-
-                        enteredCode = "";
-
-                        screen.setAttribute(
-                            "value",
-                            "ENTER CODE"
-                        );
-
-                        info.innerHTML =
-                            "EST. 1849 LOCKER — Find the 3 digit code.";
-
-                    }
-
-                    else {
-
-                        info.innerHTML =
-                            "This locker is locked.";
-
-                    }
-
-                }
-            );
-
-        });
-
-}, 100);
-
-
-/* ======================================================
-   KEYPAD
-====================================================== */
-
-document
-    .querySelectorAll(".keypadButton")
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                const number =
-                    button.getAttribute(
-                        "data-number"
+                    keypad.setAttribute(
+                        "visible","true"
                     );
 
-
-                if (enteredCode.length < 3) {
-
-                    enteredCode += number;
-
-                    screen.setAttribute(
-                        "value",
-                        enteredCode
-                    );
-
-                }
-
-            }
-        );
-
-    });
-
-
-/* ======================================================
-   ENTER CODE
-====================================================== */
-
-document
-    .querySelector("#enter")
-    .addEventListener(
-        "click",
-        () => {
-
-            if (enteredCode === "743") {
-
-                screen.setAttribute(
-                    "value",
-                    "ACCESS GRANTED"
-                );
-
-
-                info.innerHTML =
-                    "🔓 LOCKER 1849 OPENED! TAKE THE KEY.";
-
-
-                /*
-                Hide keypad.
-                */
-
-                keypad.setAttribute(
-                    "visible",
-                    "false"
-                );
-
-
-                /*
-                Open the 1849 locker.
-                */
-
-                if (selectedLocker) {
-
-                    selectedLocker.setAttribute(
-                        "animation",
-                        "property: rotation; to: 0 90 0; dur: 1200; easing: easeOutQuad"
-                    );
-
-                }
-
-
-                /*
-                Spawn key.
-                */
-
-                key.setAttribute(
-                    "visible",
-                    "true"
-                );
-
-
-                key.setAttribute(
-                    "position",
-                    "0 2.5 -4.8"
-                );
-
-
-                hasKey = false;
-
-            }
-
-            else {
-
-                screen.setAttribute(
-                    "value",
-                    "WRONG"
-                );
-
-
-                enteredCode = "";
-
-
-                setTimeout(() => {
+                    enteredCode = "";
 
                     screen.setAttribute(
                         "value",
                         "ENTER CODE"
                     );
 
-                }, 1000);
+                    message.innerHTML =
+                        "EST. 1849 — ENTER THE 3 DIGIT CODE";
 
-            }
+                } else {
 
-        }
-    );
+                    message.innerHTML =
+                        "🔒 This locker is locked.";
 
+                }
 
-/* ======================================================
-   PICK UP KEY
-====================================================== */
+            });
 
-key.addEventListener(
-    "click",
-    () => {
+        });
 
-        if (
-            key.getAttribute("visible")
-            === "true"
-        ) {
-
-            hasKey = true;
+},500);
 
 
-            key.setAttribute(
-                "visible",
-                "false"
-            );
+/* =====================================================
+   KEYPAD
+===================================================== */
 
+document
+    .querySelectorAll(".keypad")
+    .forEach(button => {
 
-            info.innerHTML =
-                "🔑 KEY COLLECTED — Find the EXIT.";
+        button.addEventListener("click", () => {
 
-        }
-
-    }
-);
-
-
-/* ======================================================
-   EXIT DOOR
-====================================================== */
-
-exitDoor.classList.add("clickable");
-
-
-exitDoor.addEventListener(
-    "click",
-    () => {
-
-        if (hasKey) {
-
-            escaped = true;
-
-
-            info.innerHTML =
-                "🚪 EXIT UNLOCKED! YOU ESCAPED!";
-
-
-            win.setAttribute(
-                "visible",
-                "true"
-            );
-
-
-            /*
-            Open the exit door.
-            */
-
-            exitDoor.setAttribute(
-                "animation",
-                "property: position; to: 0 6 -9.5; dur: 2000; easing: easeInOutQuad"
-            );
-
-
-        }
-
-        else {
-
-            info.innerHTML =
-                "🔒 The door is locked. You need a key.";
-
-        }
-
-    }
-);
-
-
-/* ======================================================
-   KEYBOARD TESTING
-====================================================== */
-
-window.addEventListener(
-    "keydown",
-    event => {
-
-        /*
-        Number keys work on computer.
-        */
-
-        if (
-            event.key >= "0" &&
-            event.key <= "9"
-        ) {
+            const number =
+                button.getAttribute("data-number");
 
             if (enteredCode.length < 3) {
 
-                enteredCode += event.key;
+                enteredCode += number;
 
                 screen.setAttribute(
                     "value",
@@ -1138,25 +1010,224 @@ window.addEventListener(
 
             }
 
+        });
+
+    });
+
+
+/* =====================================================
+   ENTER 743
+===================================================== */
+
+document
+    .getElementById("enterButton")
+    .addEventListener("click", () => {
+
+        if (enteredCode === "743") {
+
+            screen.setAttribute(
+                "value",
+                "ACCESS GRANTED"
+            );
+
+            message.innerHTML =
+                "🔓 1849 OPENED — TAKE THE KEY!";
+
+
+            keypad.setAttribute(
+                "visible",
+                "false"
+            );
+
+
+            /* locker opens */
+
+            if (selectedLocker) {
+
+                selectedLocker.setAttribute(
+                    "animation",
+                    "property:rotation; to:0 90 0; dur:1200; easing:easeOutQuad"
+                );
+
+            }
+
+
+            /* key appears */
+
+            key.setAttribute(
+                "visible",
+                "true"
+            );
+
+            key.setAttribute(
+                "position",
+                "0 2.5 -5.7"
+            );
+
+        } else {
+
+            screen.setAttribute(
+                "value",
+                "WRONG CODE"
+            );
+
+            enteredCode = "";
+
+            setTimeout(() => {
+
+                screen.setAttribute(
+                    "value",
+                    "ENTER CODE"
+                );
+
+            },1000);
+
         }
 
+    });
 
-        /*
-        Enter key submits.
-        */
 
-        if (
-            event.key === "Enter"
-        ) {
+/* =====================================================
+   KEY PICKUP
+===================================================== */
 
-            document
-                .querySelector("#enter")
-                .click();
+key.addEventListener("click", () => {
+
+    if (
+        key.getAttribute("visible")
+        === "true"
+    ) {
+
+        hasKey = true;
+
+        key.setAttribute(
+            "visible",
+            "false"
+        );
+
+        message.innerHTML =
+            "🔑 KEY COLLECTED — GO TO THE EXIT!";
+
+    }
+
+});
+
+
+/* =====================================================
+   EXIT
+===================================================== */
+
+exitDoor.addEventListener("click", () => {
+
+    if (hasKey) {
+
+        message.innerHTML =
+            "🚪 THE EXIT IS OPEN! YOU ESCAPED!";
+
+        escapeText.setAttribute(
+            "visible",
+            "true"
+        );
+
+        exitDoor.setAttribute(
+            "animation",
+            "property:position; to:0 7 -9.3; dur:2000; easing:easeInOutQuad"
+        );
+
+    } else {
+
+        message.innerHTML =
+            "🔒 LOCKED — YOU NEED THE KEY.";
+
+    }
+
+});
+
+
+/* =====================================================
+   FIND THE GOLD CLUE
+===================================================== */
+
+const player =
+    document.getElementById("player");
+
+const clueSpot =
+    document.getElementById("clueSpot");
+
+setInterval(() => {
+
+    const p =
+        player.object3D.position;
+
+    const distance =
+        Math.sqrt(
+            Math.pow(p.x + 4.2,2) +
+            Math.pow(p.z + 1.2,2)
+        );
+
+
+    /*
+    When player gets close to the clue position,
+    the gold becomes brighter and the message appears.
+    */
+
+    if (distance < 1.2 && !clueFound) {
+
+        clueFound = true;
+
+        message.innerHTML =
+            "👀 YOU FOUND THE ANGLE — THE GOLD READS 743!";
+
+        clueSpot.setAttribute(
+            "color",
+            "#ffe45c"
+        );
+
+        document
+            .getElementById("goldCode")
+            .setAttribute(
+                "scale",
+                "1.08 1.08 1.08"
+            );
+
+    }
+
+},200);
+
+
+/* =====================================================
+   COMPUTER TESTING
+===================================================== */
+
+window.addEventListener("keydown", event => {
+
+    if (
+        event.key >= "0" &&
+        event.key <= "9"
+    ) {
+
+        if (enteredCode.length < 3) {
+
+            enteredCode += event.key;
+
+            screen.setAttribute(
+                "value",
+                enteredCode
+            );
 
         }
 
     }
-);
+
+    if (event.key === "Enter") {
+
+        document
+            .getElementById("enterButton")
+            .click();
+
+    }
+
+});
 
 </script>
 
